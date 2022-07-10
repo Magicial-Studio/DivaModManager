@@ -57,7 +57,9 @@ namespace DivaModManager
             }
             catch
             {
-                Global.logger.WriteLine("Failed to extract update", LoggerType.Error);
+                var translationLoader = new UI.i18n.i18n();
+
+                Global.logger.WriteLine(translationLoader.GetTranslation("Failed to extract update"), LoggerType.Error);
             }
             File.Delete(@$"{sourceFilePath}");
         }

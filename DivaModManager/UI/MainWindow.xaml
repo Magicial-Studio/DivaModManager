@@ -7,7 +7,7 @@
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         Background="#131313"
-        Title="Diva Mod Manager" SizeChanged="OnResize"
+        Title="{DynamicResource Diva Mod Manager}" SizeChanged="OnResize"
         mc:Ignorable="d" Closing="Window_Closing" WindowStartupLocation="CenterScreen"
         Height="750" Width="1280" MinHeight="750" MinWidth="950" Loaded="WindowLoaded">
     <Window.Resources>
@@ -350,7 +350,7 @@
         <StackPanel Panel.ZIndex="3" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.ColumnSpan="5">
             <StackPanel Background="Transparent" Margin="0,0,5,0" Orientation="Horizontal" Name="DiscordButton" PreviewMouseLeftButtonDown="Discord_Click" Cursor="Hand">
                 <fa5:ImageAwesome Icon="Brands_Discord" Height="25" Foreground="#f2f2f2"/>
-                <TextBlock Text="Join the Discord!" FontSize="20" FontFamily="{StaticResource AnekLatin}" Margin="5" Background="Transparent" Foreground="#f2f2f2" FontWeight="Medium"/>
+                <TextBlock Text="{DynamicResource Join the Discord!}" FontSize="20" FontFamily="{StaticResource AnekLatin}" Margin="5" Background="Transparent" Foreground="#f2f2f2" FontWeight="Medium"/>
             </StackPanel>
             <TextBox BorderThickness="0" FontSize="20" FontFamily="{StaticResource AnekLatin}" Margin="5" Background="Transparent" BorderBrush="Transparent" IsReadOnly="True" Foreground="#f2f2f2" FontWeight="Medium" Name="Stats" />
         </StackPanel>
@@ -394,7 +394,7 @@
                     </Setter>
                 </Style>
             </TabControl.Resources>
-            <TabItem Name="ModManager" Selector.Selected="OnManagerTabSelected" FontSize="20" HorizontalAlignment="Center" Header="Manage Mods">
+            <TabItem Name="ModManager" Selector.Selected="OnManagerTabSelected" FontSize="20" HorizontalAlignment="Center" Header="{DynamicResource Manage Mods}">
                 <TabItem.Content>
                     <Grid Name="MainGrid">
                         <Grid.RowDefinitions>
@@ -423,17 +423,17 @@
                             </ComboBoxItem>
                         </ComboBox>
                         <Button Name="EditLoadoutsButton" Margin="0,0,10,0" Height="35" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="2" Background="#181818" BorderBrush="#252525" Click="EditLoadouts_Click">
-                            <TextBlock Text="Edit Loadouts" TextTrimming="CharacterEllipsis" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"/>
+                            <TextBlock Text="{DynamicResource Edit Loadouts}" TextTrimming="CharacterEllipsis" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"/>
                         </Button>
                         <Button Name="ConfigButton" Margin="0,0,10,0" Height="35" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="3" Background="#181818" BorderBrush="#252525" Click="Setup_Click">
-                            <TextBlock Text="Setup" TextTrimming="CharacterEllipsis" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"/>
+                            <TextBlock Text="{DynamicResource Setup}" TextTrimming="CharacterEllipsis" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"/>
                         </Button>
-                        <Button Name="LaunchButton" Foreground="#f2f2f2" FontSize="20" FontWeight="Medium" Content="Launch" Margin="0,0,10,0" Height="35" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="4" Background="#181818" BorderBrush="#252525" Click="Launch_Click"/>
+                        <Button Name="LaunchButton" Foreground="#f2f2f2" FontSize="20" FontWeight="Medium" Content="{DynamicResource Launch}" Margin="0,0,10,0" Height="35" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="4" Background="#181818" BorderBrush="#252525" Click="Launch_Click"/>
                         <Button Name="OpenModsButton" Margin="0,0,10,0" Height="35" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="6" Background="#181818" BorderBrush="#252525" Click="CreateMod_Click">
-                            <TextBlock Text="Create Mod" TextTrimming="CharacterEllipsis" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"/>
+                            <TextBlock Text="{DynamicResource Create Mod}" TextTrimming="CharacterEllipsis" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"/>
                         </Button>
                         <Button FontWeight="Medium" Name="UpdateButton" Margin="0,0,10,0"  Height="34" VerticalAlignment="Center" Grid.Column="7" Background="#181818" BorderBrush="#252525"  Click="Update_Click">
-                            <TextBlock Text="Update" TextTrimming="CharacterEllipsis" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"/>
+                            <TextBlock Text="{DynamicResource Update}" TextTrimming="CharacterEllipsis" Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"/>
                         </Button>
 
                         <ComboBox Grid.Column="5" Margin="0,0,10,0" Height="35" FontSize="20" FontFamily="{StaticResource AnekLatin}" FontWeight="Medium" Name="LauncherOptionsBox" SelectionChanged="LauncherOptionsBox_SelectionChanged"/>
@@ -488,7 +488,7 @@
                                     </ContextMenu>
                                 </DataGrid.ContextMenu>
                                 <DataGrid.Columns>
-                                    <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding enabled, Mode=TwoWay}" IsReadOnly="False" Width="58">
+                                    <DataGridCheckBoxColumn Header="{DynamicResource Enabled}" Binding="{Binding enabled, Mode=TwoWay}" IsReadOnly="False" Width="58">
                                         <DataGridCheckBoxColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <EventSetter Event="CheckBox.Checked" Handler="OnChecked"/>
@@ -501,7 +501,7 @@
                                             </Style>
                                         </DataGridCheckBoxColumn.CellStyle>
                                     </DataGridCheckBoxColumn>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding name, Mode=TwoWay}" IsReadOnly="True" Width="1.5*"/>
+                                    <DataGridTextColumn Header="{DynamicResource Name}" Binding="{Binding name, Mode=TwoWay}" IsReadOnly="True" Width="1.5*"/>
                                 </DataGrid.Columns>
 
                             </DataGrid>
@@ -673,7 +673,7 @@
                     </ComboBox>
                     <ComboBox Margin="5,0,0,0" Grid.Column="1" IsEnabled="False" FontFamily="{StaticResource AnekLatin}" Name="FilterBox" Height="35" MinWidth="130" HorizontalAlignment="Stretch" FontSize="20"  FontWeight="Medium" SelectionChanged="FilterSelectionChanged"/>
                     <ComboBox Margin="5,0,0,0" Grid.Column="2" IsEnabled="False" FontFamily="{StaticResource AnekLatin}" FontWeight="Medium" FontSize="20" Name="TypeBox" Height="35" HorizontalAlignment="Stretch" MinWidth="100" SelectionChanged="TypeFilterSelectionChanged">
-                        <ComboBoxItem xml:space="preserve" IsSelected="True"> Mods</ComboBoxItem>
+                        <ComboBoxItem xml:space="preserve" IsSelected="True" Content="{DynamicResource Mods}"/>
                         <ComboBoxItem xml:space="preserve"> WiPs</ComboBoxItem>
                         <ComboBoxItem xml:space="preserve"> Sounds</ComboBoxItem>
                     </ComboBox>
@@ -698,7 +698,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBox Margin="5,0,35,0" Padding="4,0,0,0" Grid.Column="5" FontFamily="{StaticResource AnekLatin}" IsEnabled="False" KeyDown="SearchBar_KeyDown" Name="SearchBar" Height="35" MinWidth="200" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"/>
-                    <TextBlock Margin="5,0,35,0" Padding="7,8,3,3" Grid.Column="5" FontFamily="{StaticResource AnekLatin}" IsHitTestVisible="False" Height="35" MinWidth="200" HorizontalAlignment="Left" Text="Search..." VerticalAlignment="Center" Foreground="#303030">
+                    <TextBlock Margin="5,0,35,0" Padding="7,8,3,3" Grid.Column="5" FontFamily="{StaticResource AnekLatin}" IsHitTestVisible="False" Height="35" MinWidth="200" HorizontalAlignment="Left" Text="{DynamicResource Search...}" VerticalAlignment="Center" Foreground="#303030">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Style.Triggers>
@@ -714,10 +714,7 @@
                     </Button>
                     <StackPanel Grid.Column="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0" >
                         <CheckBox Name="NSFWCheckbox" IsEnabled="False" Unchecked="NSFWCheckbox_Checked" Checked="NSFWCheckbox_Checked"  Margin="0,0,5,0" VerticalAlignment="Center" />
-                        <TextBlock Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium">
-                            Include<LineBreak/>
-                            NSFW
-                        </TextBlock>
+                        <TextBlock Foreground="#f2f2f2" FontFamily="{StaticResource AnekLatin}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{DynamicResource IncludeNSFW}"/>
                     </StackPanel>
                     <Image Grid.Column="7" Name="GB" VerticalAlignment="Center" HorizontalAlignment="Center" Height="35" Source="../Assets/GameBanana.png" Cursor="Hand" MouseLeftButtonDown="GameBanana_Click"/>
                     <Popup PlacementTarget="{Binding ElementName=GB}" IsOpen="{Binding IsMouseDirectlyOver, ElementName=GB, Mode=OneWay}" AllowsTransparency="True">
@@ -733,21 +730,19 @@
                     </Popup>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.ColumnSpan="8" Grid.Row="2">
                         <Button IsEnabled="False" FontFamily="{StaticResource AnekLatin}" Name="PageLeft" Click="DecrementPage" Content="&lt;" HorizontalAlignment="Right" Margin="0,0,15,0" FontSize="20" FontWeight="Medium"  Height="35" Width="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2"/>
-                        <TextBlock Name="Page" Text="Page 1" Foreground="#f2f2f2" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium" />
+                        <TextBlock Name="Page" Text="{DynamicResource Page 1}" Foreground="#f2f2f2" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium" />
                         <Button IsEnabled="False" FontFamily="{StaticResource AnekLatin}" Name="PageRight" Click="IncrementPage" Content=">" HorizontalAlignment="Left" Margin="15,0,0,0" FontSize="20" FontWeight="Medium" Height="35" Width="35" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2"/>
                         <ComboBox IsEnabled="False" Margin="15,0,15,0" FontFamily="{StaticResource AnekLatin}" Name="PageBox" SelectionChanged="PageBox_SelectionChanged" Height="35" VerticalAlignment="Center"/>
                     </StackPanel>
                     <StackPanel Margin="5,5,10,5" Grid.ColumnSpan="8" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2">
-                        <Button Margin="0,0,15,0" Click="ClearCache" Name="ClearCacheButton" Content="Refresh" HorizontalAlignment="center" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"  Height="35" Width="80" Background="#181818" BorderBrush="#252525" IsEnabled="False" Foreground="#f2f2f2">
+                        <Button Margin="0,0,15,0" Click="ClearCache" Name="ClearCacheButton" Content="{DynamicResource Refresh}" HorizontalAlignment="center" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"  Height="35" Width="80" Background="#181818" BorderBrush="#252525" IsEnabled="False" Foreground="#f2f2f2">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <TextBlock Margin="0,0,15,0" FontFamily="{StaticResource AnekLatin}" Foreground="#f2f2f2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium">
-                            Per Page:
-                        </TextBlock>
+                        <TextBlock Margin="0,0,15,0" FontFamily="{StaticResource AnekLatin}" Foreground="#f2f2f2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{DynamicResource Per Page}"/>
                         <ComboBox IsEnabled="False" FontFamily="{StaticResource AnekLatin}" Name="PerPageBox" SelectionChanged="PerPageSelectionChanged" Height="35" VerticalAlignment="Center">
                             <ComboBoxItem>10</ComboBoxItem>
                             <ComboBoxItem IsSelected="True">20</ComboBoxItem>
@@ -760,7 +755,7 @@
                     <Image Name="LoadingBar" Grid.ColumnSpan="8" Grid.Row="1" gif:ImageBehavior.AnimatedSource="../Assets/load.gif" Panel.ZIndex="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="150"/>
                     <StackPanel Name="ErrorPanel" Grid.ColumnSpan="8" Grid.Row="1" Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Name="BrowserMessage" HorizontalAlignment="Center" FontFamily="{StaticResource AnekLatin}" Opacity="1" Background="Transparent" Foreground="#f2f2f2" FontWeight="Medium" TextWrapping="Wrap" Width="800" TextAlignment="Center" FontSize="25"/>
-                        <Button Margin="10" Click="BrowserRefresh" Name="BrowserRefreshButton" Content="Retry" HorizontalAlignment="center" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"  Height="40" Width="140" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2">
+                        <Button Margin="10" Click="BrowserRefresh" Name="BrowserRefreshButton" Content="{DynamicResource Retry}" HorizontalAlignment="center" FontFamily="{StaticResource AnekLatin}" FontSize="20" FontWeight="Medium"  Height="40" Width="140" Background="#181818" BorderBrush="#252525" Foreground="#f2f2f2">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>

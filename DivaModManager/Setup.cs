@@ -26,6 +26,7 @@ namespace DivaModManager
 {
     public static class Setup
     {
+        static UI.i18n.i18n translationLoader = new UI.i18n.i18n();
         private static ProgressBox progressBox;
         private static GitHubClient client = new GitHubClient(new ProductHeaderValue("DivaModManager"));
         public static async Task<bool> CheckForDMLUpdate(CancellationTokenSource cancellationToken)
@@ -55,7 +56,7 @@ namespace DivaModManager
                     string fileName = release.Assets.First().Name;
                     if (localVersion != null)
                     {
-                        ChangelogBox notification = new ChangelogBox(release, "DivaModLoader", $"A new version of DivaModLoader is available (v{onlineVersion})!", null, false, true);
+                        ChangelogBox notification = new ChangelogBox(release, translationLoader.GetTranslation("DivaModLoader"), $"{translationLoader.GetTranslation("A new version of DivaModLoader is available")} (v{onlineVersion})!", null, false, true);
                         notification.ShowDialog();
                         notification.Activate();
                         if (notification.YesNo)
@@ -64,7 +65,7 @@ namespace DivaModManager
                             if (!File.Exists($"{gameFolder}{Global.s}config.toml") || !File.Exists($"{gameFolder}{Global.s}dinput8.dll")
                                 || String.IsNullOrEmpty(Global.config.Configs[Global.config.CurrentGame].ModLoaderVersion))
                             {
-                                Global.logger.WriteLine($"DivaModLoader failed to install, try setting up again.", LoggerType.Error);
+                                Global.logger.WriteLine($"", LoggerType.Error);
                                 return false;
                             }
                             else
@@ -78,7 +79,7 @@ namespace DivaModManager
                         if (!File.Exists($"{gameFolder}{Global.s}config.toml") || !File.Exists($"{gameFolder}{Global.s}dinput8.dll")
                             || String.IsNullOrEmpty(Global.config.Configs[Global.config.CurrentGame].ModLoaderVersion))
                         {
-                            Global.logger.WriteLine($"DivaModLoader failed to install, try setting up again.", LoggerType.Error);
+                            Global.logger.WriteLine(translationLoader.GetTranslation("DivaModLoader failed to install, try setting up again."), LoggerType.Error);
                             return false;
                         }
                         else
@@ -87,7 +88,7 @@ namespace DivaModManager
                 }
                 else
                 {
-                    Global.logger.WriteLine("No update for DivaModLoader available.", LoggerType.Info);
+                    Global.logger.WriteLine(translationLoader.GetTranslation("No update for DivaModLoader available."), LoggerType.Info);
                     return true;
                 }
             }
@@ -114,16 +115,16 @@ namespace DivaModManager
                     }
                     catch (Exception e)
                     {
-                        Global.logger.WriteLine($"Couldn't delete the already existing {downloadName} ({e.Message})",
+                        Global.logger.WriteLine($"{translationLoader.GetTranslation("Couldn't delete the already existing")} {downloadName} ({e.Message})",
                             LoggerType.Error);
                         return;
                     }
                 }
-                Global.logger.WriteLine("Downloading DivaModLoader...", LoggerType.Info);
+                Global.logger.WriteLine(translationLoader.GetTranslation("Downloading DivaModLoader..."), LoggerType.Info);
                 progressBox = new ProgressBox(cancellationToken);
                 progressBox.progressBar.Value = 0;
                 progressBox.finished = false;
-                progressBox.Title = $"Download Progress";
+                progressBox.Title = translationLoader.GetTranslation("Download Progress");
                 progressBox.Show();
                 progressBox.Activate();
                 // Write and download the file
@@ -155,7 +156,7 @@ namespace DivaModManager
                     progressBox.finished = true;
                     progressBox.Close();
                 }
-                Global.logger.WriteLine($"Error whilst downloading DivaModLoader ({e.Message})", LoggerType.Error);
+                Global.logger.WriteLine($"{ translationLoader.GetTranslation("Error whilst downloading DivaModLoader")} ({e.Message})", LoggerType.Error);
             }
         }
         private static async Task ExtractFile(string fileName, string output, string version)
@@ -206,12 +207,12 @@ namespace DivaModManager
                     }
                     catch (Exception e)
                     {
-                        Global.logger.WriteLine($"Couldn't extract {fileName}. ({e.Message})", LoggerType.Error);
+                        Global.logger.WriteLine($"{translationLoader.GetTranslation("Couldn't extract")} {fileName}. ({e.Message})", LoggerType.Error);
                     }
                     Global.config.Configs[Global.config.CurrentGame].ModLoaderVersion = version;
                     Global.UpdateConfig();
                     File.Delete(_ArchiveSource);
-                    Global.logger.WriteLine($"Finished updating DivaModLoader.", LoggerType.Info);
+                    Global.logger.WriteLine(translationLoader.GetTranslation("Finished updating DivaModLoader."), LoggerType.Info);
                 }
             });
 
@@ -224,7 +225,7 @@ namespace DivaModManager
             }
             progressBox.progressBar.Value = progress.Percentage * 100;
             progressBox.taskBarItem.ProgressValue = progress.Percentage;
-            progressBox.progressTitle.Text = $"Downloading {progress.FileName}...";
+            progressBox.progressTitle.Text = $"{translationLoader.GetTranslation("Downloading")} {progress.FileName}...";
             progressBox.progressText.Text = $"{Math.Round(progress.Percentage * 100, 2)}% " +
                 $"({StringConverters.FormatSize(progress.DownloadedBytes)} of {StringConverters.FormatSize(progress.TotalBytes)})";
         }
@@ -256,12 +257,12 @@ namespace DivaModManager
             {
                 if (!int.TryParse(onlineVersionParts[i], out _))
                 {
-                    MessageBox.Show($"Couldn't parse {onlineVersion}");
+                    MessageBox.Show($"{translationLoader.GetTranslation("Couldn't parse")} {onlineVersion}");
                     return false;
                 }
                 if (!int.TryParse(localVersionParts[i], out _))
                 {
-                    MessageBox.Show($"Couldn't parse {localVersion}");
+                    MessageBox.Show($"{translationLoader.GetTranslation("Couldn't parse")} {localVersion}");
                     return false;
                 }
                 if (int.Parse(onlineVersionParts[i]) > int.Parse(localVersionParts[i]))
@@ -286,7 +287,7 @@ namespace DivaModManager
             }
             catch (Exception e)
             {
-                Global.logger.WriteLine($"Couldn't find install path in registry ({e.Message})", LoggerType.Error);
+                Global.logger.WriteLine($"{translationLoader.GetTranslation("Couldn't find install path in registry")} ({e.Message})", LoggerType.Error);
             }
             if (!File.Exists(defaultPath))
             {
@@ -302,7 +303,7 @@ namespace DivaModManager
                     defaultPath = dialog.FileName;
                 else if (!String.IsNullOrEmpty(dialog.FileName))
                 {
-                    Global.logger.WriteLine($"Invalid .exe chosen", LoggerType.Error);
+                    Global.logger.WriteLine(translationLoader.GetTranslation("Invalid .exe chosen"), LoggerType.Error);
                     return false;
                 }
                 else
