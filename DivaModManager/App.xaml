@@ -6,7 +6,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="UI\i18n\Translation.xaml"/>
-                <ResourceDictionary Source="UI\i18n\Translationzh-CN.xaml"/>
                 <ResourceDictionary
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
