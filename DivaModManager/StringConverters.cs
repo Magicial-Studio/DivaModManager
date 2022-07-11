@@ -9,7 +9,7 @@ namespace DivaModManager
 {
     public static class StringConverters
     {
-        static UI.i18n.i18n translationLoader = new UI.i18n.i18n();
+        
         public static string FormatFileName(string filename)
         {
             return Path.GetFileName(filename);
@@ -42,27 +42,27 @@ namespace DivaModManager
         {
             if (timeSpan.TotalMinutes < 60)
             {
-                return Math.Floor(timeSpan.TotalMinutes).ToString() + translationLoader.GetTranslation("min");
+                return Math.Floor(timeSpan.TotalMinutes).ToString() + Global.i18n.GetTranslation("min");
             }
             else if (timeSpan.TotalHours < 24)
             {
-                return Math.Floor(timeSpan.TotalHours).ToString() + translationLoader.GetTranslation("hr");
+                return Math.Floor(timeSpan.TotalHours).ToString() + Global.i18n.GetTranslation("hr");
             }
             else if (timeSpan.TotalDays < 7)
             {
-                return Math.Floor(timeSpan.TotalDays).ToString() + translationLoader.GetTranslation("d");
+                return Math.Floor(timeSpan.TotalDays).ToString() + Global.i18n.GetTranslation("d");
             }
             else if (timeSpan.TotalDays < 30.4)
             {
-                return Math.Floor(timeSpan.TotalDays / 7).ToString() + translationLoader.GetTranslation("wk");
+                return Math.Floor(timeSpan.TotalDays / 7).ToString() + Global.i18n.GetTranslation("wk");
             }
             else if (timeSpan.TotalDays < 365.25)
             {
-                return Math.Floor(timeSpan.TotalDays / 30.4).ToString() + translationLoader.GetTranslation("mo");
+                return Math.Floor(timeSpan.TotalDays / 30.4).ToString() + Global.i18n.GetTranslation("mo");
             }
             else
             {
-                return Math.Floor(timeSpan.TotalDays % 365.25).ToString() + translationLoader.GetTranslation("yr");
+                return Math.Floor(timeSpan.TotalDays % 365.25).ToString() + Global.i18n.GetTranslation("yr");
             }
         }
         public static string FormatTimeAgo(TimeSpan timeSpan)
@@ -70,32 +70,32 @@ namespace DivaModManager
             if (timeSpan.TotalMinutes < 60)
             {
                 var minutes = Math.Floor(timeSpan.TotalMinutes);
-                return minutes > 1 ? $"{minutes} {translationLoader.GetTranslation("minutes ago")}" : $"{minutes} {translationLoader.GetTranslation("minute ago")}";
+                return minutes > 1 ? $"{minutes} {Global.i18n.GetTranslation("minutes ago")}" : $"{minutes} {Global.i18n.GetTranslation("minute ago")}";
             }
             else if (timeSpan.TotalHours < 24)
             {
                 var hours = Math.Floor(timeSpan.TotalHours);
-                return hours > 1 ? $"{hours} {translationLoader.GetTranslation("hours ago")}" : $"{hours} {translationLoader.GetTranslation("hour ago")}";
+                return hours > 1 ? $"{hours} {Global.i18n.GetTranslation("hours ago")}" : $"{hours} {Global.i18n.GetTranslation("hour ago")}";
             }
             else if (timeSpan.TotalDays < 7)
             {
                 var days = Math.Floor(timeSpan.TotalDays);
-                return days > 1 ? $"{days} {translationLoader.GetTranslation("days ago")}" : $"{days} {translationLoader.GetTranslation("day ago")}";
+                return days > 1 ? $"{days} {Global.i18n.GetTranslation("days ago")}" : $"{days} {Global.i18n.GetTranslation("day ago")}";
             }
             else if (timeSpan.TotalDays < 30.4)
             {
                 var weeks = Math.Floor(timeSpan.TotalDays / 7);
-                return weeks > 1 ? $"{weeks} {translationLoader.GetTranslation("weeks ago")}" : $"{weeks}{translationLoader.GetTranslation("week ago")}";
+                return weeks > 1 ? $"{weeks} {Global.i18n.GetTranslation("weeks ago")}" : $"{weeks}{Global.i18n.GetTranslation("week ago")}";
             }
             else if (timeSpan.TotalDays < 365.25)
             {
                 var months = Math.Floor(timeSpan.TotalDays / 30.4);
-                return months > 1 ? $"{months} {translationLoader.GetTranslation("months ago")}" : $"{months} {translationLoader.GetTranslation("months ago")}";
+                return months > 1 ? $"{months} {Global.i18n.GetTranslation("months ago")}" : $"{months} {Global.i18n.GetTranslation("months ago")}";
             }
             else
             {
                 var years = Math.Floor(timeSpan.TotalDays / 365.25);
-                return years > 1 ? $"{years} {translationLoader.GetTranslation("years ago")}" : $"{years} {translationLoader.GetTranslation("year ago")}";
+                return years > 1 ? $"{years} {Global.i18n.GetTranslation("years ago")}" : $"{years} {Global.i18n.GetTranslation("year ago")}";
             }
         }
         public static string FormatSingular(string rootCat, string cat)

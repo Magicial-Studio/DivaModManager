@@ -18,6 +18,7 @@ namespace DivaModManager
     }
     public class Logger
     {
+
         RichTextBox outputWindow;
         public Logger(RichTextBox textBox)
         {
@@ -32,15 +33,15 @@ namespace DivaModManager
             {
                 case LoggerType.Info:
                     color = "#52FF00";
-                    header = "INFO";
+                    header = Global.i18n.GetTranslation("INFO");
                     break;
                 case LoggerType.Warning:
                     color = "#FFFF00";
-                    header = "WARNING";
+                    header = Global.i18n.GetTranslation("WARNING");
                     break;
                 case LoggerType.Error:
                     color = "#FFB0B0";
-                    header = "ERROR";
+                    header = Global.i18n.GetTranslation("ERROR");
                     break;
             }
             // Call on UI thread

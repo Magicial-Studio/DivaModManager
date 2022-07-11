@@ -25,6 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="UI\i18n\Translation.xaml" />
+    <Page Remove="UI\i18n\Translation.zh_CN.xaml" />
+    <Page Remove="UI\i18n\Translationzh_CN.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Assets\miku.ico" />
   </ItemGroup>
 

@@ -32,8 +32,8 @@ namespace DivaModManager
             if (String.IsNullOrEmpty(Global.config.Configs[Global.config.CurrentGame].ModsFolder)
                 || !Directory.Exists(Global.config.Configs[Global.config.CurrentGame].ModsFolder))
             {
-                MessageBox.Show($"Please click Setup before installing mods!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                Global.logger.WriteLine("Please click Setup before installing mods!", LoggerType.Warning);
+                MessageBox.Show(Global.i18n.GetTranslation("Please click Setup before installing mods!"), Global.i18n.GetTranslation("Warning"), MessageBoxButton.OK, MessageBoxImage.Warning);
+                Global.logger.WriteLine(Global.i18n.GetTranslation("Please click Setup before installing mods!"), LoggerType.Warning);
                 return;
             }
             DownloadWindow downloadWindow = new DownloadWindow(record);
@@ -69,8 +69,8 @@ namespace DivaModManager
             if (String.IsNullOrEmpty(Global.config.Configs[Global.config.CurrentGame].ModsFolder)
                 || !Directory.Exists(Global.config.Configs[Global.config.CurrentGame].ModsFolder))
             {
-                MessageBox.Show($"Please click Setup before installing mods!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                Global.logger.WriteLine("Please click Setup before installing mods!", LoggerType.Warning);
+                MessageBox.Show(Global.i18n.GetTranslation("Please click Setup before installing mods!"), Global.i18n.GetTranslation("Warning"), MessageBoxButton.OK, MessageBoxImage.Warning); ;
+                Global.logger.WriteLine(Global.i18n.GetTranslation("Please click Setup before installing mods!"), LoggerType.Warning);
                 return;
             }
             if (ParseProtocol(line))
@@ -103,7 +103,7 @@ namespace DivaModManager
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Error while fetching data {e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"{Global.i18n.GetTranslation("Error while fetching data")} {e.Message}", Global.i18n.GetTranslation("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
         }
@@ -115,7 +115,7 @@ namespace DivaModManager
             }
             progressBox.progressBar.Value = progress.Percentage * 100;
             progressBox.taskBarItem.ProgressValue = progress.Percentage;
-            progressBox.progressTitle.Text = $"Downloading {progress.FileName}...";
+            progressBox.progressTitle.Text = $"{Global.i18n.GetTranslation("Downloading")} {progress.FileName}...";
             progressBox.progressText.Text = $"{Math.Round(progress.Percentage * 100, 2)}% " +
                 $"({StringConverters.FormatSize(progress.DownloadedBytes)} of {StringConverters.FormatSize(progress.TotalBytes)})";
         }
@@ -137,7 +137,7 @@ namespace DivaModManager
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Error while parsing {line}: {e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"{Global.i18n.GetTranslation("Error while parsing")} {line}: {e.Message}", Global.i18n.GetTranslation("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
         }
@@ -194,7 +194,7 @@ namespace DivaModManager
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Couldn't extract {fileName}: {e.Message}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show($"{Global.i18n.GetTranslation("Couldn't extract")} {fileName}: {e.Message}", Global.i18n.GetTranslation("Warning"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             foreach (var folder in Directory.GetDirectories(ArchiveDestination, "*", SearchOption.AllDirectories).Where(x => File.Exists($@"{x}{Global.s}config.toml")))
@@ -226,7 +226,7 @@ namespace DivaModManager
             // Check if folder output folder exists, if not nothing was extracted
             if (!Directory.Exists(ArchiveDestination))
             {
-                MessageBox.Show($"Didn't extract {fileName} due to improper format", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"{Global.i18n.GetTranslation("Didn't extract")} {fileName} {Global.i18n.GetTranslation("due to improper format")}", Global.i18n.GetTranslation("Warning"), MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -298,7 +298,7 @@ namespace DivaModManager
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Couldn't extract {fileName}: {e.Message}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show($"{Global.i18n.GetTranslation("Couldn't extract")} {fileName}: {e.Message}", Global.i18n.GetTranslation("Warning"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             foreach (var folder in Directory.GetDirectories(ArchiveDestination, "*", SearchOption.AllDirectories).Where(x => File.Exists($@"{x}{Global.s}config.toml")))
@@ -330,7 +330,7 @@ namespace DivaModManager
             // Check if folder output folder exists, if not nothing was extracted
             if (!Directory.Exists(ArchiveDestination))
             {
-                MessageBox.Show($"Didn't extract {fileName} due to improper format", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"{Global.i18n.GetTranslation("Didn't extract")} {fileName} {Global.i18n.GetTranslation("due to improper format")}", Global.i18n.GetTranslation("Warning") , MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -354,7 +354,7 @@ namespace DivaModManager
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show($"Couldn't delete the already existing {Global.assemblyLocation}/Downloads/{fileName} ({e.Message})",
+                        MessageBox.Show($"{Global.i18n.GetTranslation("Couldn't delete the already existing")} {Global.assemblyLocation}/Downloads/{fileName} ({e.Message})",
                             "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
@@ -362,7 +362,7 @@ namespace DivaModManager
                 progressBox = new ProgressBox(cancellationToken);
                 progressBox.progressBar.Value = 0;
                 progressBox.finished = false;
-                progressBox.Title = $"Download Progress";
+                progressBox.Title = Global.i18n.GetTranslation("Download Progress");
                 progressBox.Show();
                 progressBox.Activate();
                 // Write and download the file
@@ -392,7 +392,7 @@ namespace DivaModManager
                     progressBox.finished = true;
                     progressBox.Close();
                 }
-                MessageBox.Show($"Error whilst downloading {fileName}. {e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"{Global.i18n.GetTranslation("Error whilst downloading")} {fileName}. {e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 cancelled = true;
             }
         }

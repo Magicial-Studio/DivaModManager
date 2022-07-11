@@ -18,7 +18,7 @@ namespace DivaModManager
             var configPath = $"{Path.GetDirectoryName(Global.config.Configs[Global.config.CurrentGame].ModsFolder)}{Global.s}config.toml";
             if (!File.Exists(configPath))
             {
-                Global.logger.WriteLine($"Unable to find {configPath}", LoggerType.Error);
+                Global.logger.WriteLine($"{Global.i18n.GetTranslation("Unable to find")} {configPath}", LoggerType.Error);
                 return;
             }
             var configString = String.Empty;
@@ -33,7 +33,7 @@ namespace DivaModManager
                     // Check if the exception is related to an IO error.
                     if (e.GetType() != typeof(IOException))
                     {
-                        Global.logger.WriteLine($"Couldn't access {configPath} ({e.Message})", LoggerType.Error);
+                        Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't access")} {configPath} ({e.Message})", LoggerType.Error);
                         break;
                     }
                 }
@@ -63,7 +63,7 @@ namespace DivaModManager
                     // Check if the exception is related to an IO error.
                     if (e.GetType() != typeof(IOException))
                     {
-                        Global.logger.WriteLine($"Couldn't access {configPath} ({e.Message})", LoggerType.Error);
+                        Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't access")} {configPath} ({e.Message})", LoggerType.Error);
                         break;
                     }
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,40 +8,64 @@ using System.Windows;
 
 namespace DivaModManager.UI.i18n
 {
-    internal class i18n
+    public class i18n
     {
-        public List<ResourceDictionary> dictionaryList = new List<ResourceDictionary>();
-        public string DefaultLanguage { get => System.Globalization.CultureInfo.CurrentCulture.Name; }
-        
-        public void UpdateUserInterfaceLanguage(string targetLanguage=null)
+        public static Dictionary<string, ResourceDictionary> dictionaries;
+
+        public string CurrentLanguage { get; set; } = "en";
+
+        static i18n()
         {
-            if (targetLanguage == null)
-            {
-                targetLanguage= DefaultLanguage;
-            }
-            else if (targetLanguage.StartsWith("en"))
-            {
-                targetLanguage = null;
-            }
-            foreach (ResourceDictionary dictionary in Application.Current.Resources.MergedDictionaries)
-            {
-                dictionaryList.Add(dictionary);
-            }
-            string requestedCulture = @"UI\i18n\Translation" + targetLanguage + ".xaml";
-            ResourceDictionary resourceDictionary = dictionaryList.FirstOrDefault(d => d.Source.OriginalString.Equals(requestedCulture));
-            Application.Current.Resources.MergedDictionaries.Remove(resourceDictionary);
-            Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
-            
+            dictionaries = Application.Current.Resources.MergedDictionaries.Where(x => x.Source != null).ToDictionary(x => x.Source.OriginalString);
         }
-        public string GetTranslation(string message)
+
+        public string GetLanguage(string targetLanguage) => GetLanguage(CultureInfo.CreateSpecificCulture(targetLanguage));
+
+        public string GetLanguage() => GetLanguage(CultureInfo.CurrentUICulture);
+
+        public string GetLanguage(CultureInfo cultureInfo)
         {
-            return Application.Current.FindResource(message).ToString();
+            do
+            {
+                var targetLanguage = cultureInfo.Name;
+
+                if (SupportedLanguages.ContainsValue(targetLanguage))
+                {
+                    return targetLanguage;
+                }
+            } while ((cultureInfo = cultureInfo.Parent).Name != ""); // fallback to parent culture (zh-CN,zh-Hans,zh) until InvariantCulture ""
+
+            return "en";
         }
+
+        public void UpdateUserInterfaceLanguage() => UpdateUserInterfaceLanguage(GetLanguage());
+
+        public void UpdateUserInterfaceLanguage(string targetLanguage)
+        {
+            if (!SupportedLanguages.Values.Contains(targetLanguage))
+                throw new ArgumentOutOfRangeException(nameof(targetLanguage));
+
+            ResourceDictionary rd = dictionaries[$@"UI\i18n\Translation.{targetLanguage}.xaml"];
+
+            if (targetLanguage == CurrentLanguage)
+                return;
+
+            // put target language's dictionary at last of the merged dictionaries
+            Application.Current.Resources.MergedDictionaries.Remove(rd);
+            Application.Current.Resources.MergedDictionaries.Add(rd);
+
+            CurrentLanguage = targetLanguage;
+        }
+
+        public string GetTranslation(string requestString)
+        {
+            return Application.Current.FindResource(requestString).ToString();
+        }
+
+        public Dictionary<string, string> SupportedLanguages = new Dictionary<string, string>
+        {
+            { "English", "en" },
+            { "简体中文" , "zh-CN" }
+        };
     }
-    public static class SupportedLanguages 
-    { 
-        public static string[] supportedLanguages = { "en" };
-        public static string[] supportedLanguagesFriendlyName = { "English" };
-    }
-    
 }

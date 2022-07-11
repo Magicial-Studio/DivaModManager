@@ -12,7 +12,6 @@ namespace DivaModManager
     /// </summary>
     public partial class App : Application
     {
-        static i18n translationLoader = new i18n();
         protected static bool AlreadyRunning()
         {
             bool running = false;
@@ -43,21 +42,21 @@ namespace DivaModManager
 
             DispatcherUnhandledException += App_DispatcherUnhandledException;
             RegistryConfig.InstallGBHandler();
+            Global.i18n.UpdateUserInterfaceLanguage();
             MainWindow mw = new MainWindow();
-            translationLoader.UpdateUserInterfaceLanguage();
             bool running = AlreadyRunning();
             if (!running)
                 mw.Show();
             if (e.Args.Length > 1 && e.Args[0] == "-download")
                 new ModDownloader().Download(e.Args[1], running);
             else if (running)
-                MessageBox.Show(translationLoader.GetTranslation("Diva Mod Manager is already running."), translationLoader.GetTranslation("Warning"), MessageBoxButton.OK, MessageBoxImage.Exclamation); 
+                MessageBox.Show(Global.i18n.GetTranslation("Diva Mod Manager is already running."), Global.i18n.GetTranslation("Warning"), MessageBoxButton.OK, MessageBoxImage.Exclamation); 
 
         }
         private static void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show($"{translationLoader.GetTranslation("Unhandled exception occured:")}\n{e.Exception.Message}\n\n{translationLoader.GetTranslation("Inner Exception:")}\n:\n{e.Exception.InnerException}" +
-                $"\n\n{translationLoader.GetTranslation("Stack Trace:")}\n{e.Exception.StackTrace}", $"{translationLoader.GetTranslation("Error")}", MessageBoxButton.OK,
+            MessageBox.Show($"{Global.i18n.GetTranslation("Unhandled exception occured:")}\n{e.Exception.Message}\n\n{Global.i18n.GetTranslation("Inner Exception:")}\n:\n{e.Exception.InnerException}" +
+                $"\n\n{Global.i18n.GetTranslation("Stack Trace:")}\n{e.Exception.StackTrace}", $"{Global.i18n.GetTranslation("Error")}", MessageBoxButton.OK,
                              MessageBoxImage.Error);
 
             e.Handled = true;

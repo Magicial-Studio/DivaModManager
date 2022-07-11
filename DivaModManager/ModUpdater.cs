@@ -22,6 +22,7 @@ namespace DivaModManager
     {
         private static ProgressBox progressBox;
         private static int updateCounter;
+        
         public async static Task CheckForUpdates(string path, MainWindow main)
         {
             updateCounter = 0;
@@ -56,7 +57,7 @@ namespace DivaModManager
                 }
                 catch (Exception e)
                 {
-                    Global.logger.WriteLine($"Error occurred while getting metadata for {mod} ({e.Message})", LoggerType.Error);
+                    Global.logger.WriteLine($"{Global.i18n.GetTranslation("Error occurred while getting metadata for")} {mod} ({e.Message})", LoggerType.Error);
                     continue;
                 }
                 Uri url = null;
@@ -95,7 +96,7 @@ namespace DivaModManager
             }
             if (requestUrls.Count == 0)
             {
-                Global.logger.WriteLine("No mod updates available.", LoggerType.Info);
+                Global.logger.WriteLine(Global.i18n.GetTranslation("No mod updates available."), LoggerType.Info);
                 main.GameBox.IsEnabled = true;
                 main.ModGrid.IsEnabled = true;
                 main.ConfigButton.IsEnabled = true;
@@ -150,15 +151,15 @@ namespace DivaModManager
                 }
                 catch (Exception e)
                 {
-                    Global.logger.WriteLine($"Error occurred while getting metadata for {convertedModList[i]} ({e.Message})", LoggerType.Error);
+                    Global.logger.WriteLine($"{Global.i18n.GetTranslation("Error occurred while getting metadata for")} {convertedModList[i]} ({e.Message})", LoggerType.Error);
                     continue;
                 }
                 await ModUpdate(response[i], convertedModList[i], metadata, new Progress<DownloadProgress>(ReportUpdateProgress), CancellationTokenSource.CreateLinkedTokenSource(cancellationToken.Token));
             }
             if (updateCounter == 0)
-                Global.logger.WriteLine("No mod updates available.", LoggerType.Info);
+                Global.logger.WriteLine(Global.i18n.GetTranslation("No mod updates available."), LoggerType.Info);
             else
-                Global.logger.WriteLine("Done checking for mod updates!", LoggerType.Info);
+                Global.logger.WriteLine(Global.i18n.GetTranslation("Done checking for mod updates!"), LoggerType.Info);
 
             main.GameBox.IsEnabled = true;
             main.ModGrid.IsEnabled = true;
@@ -179,7 +180,7 @@ namespace DivaModManager
             }
             progressBox.progressBar.Value = progress.Percentage * 100;
             progressBox.taskBarItem.ProgressValue = progress.Percentage;
-            progressBox.progressTitle.Text = $"Downloading {progress.FileName}...";
+            progressBox.progressTitle.Text = $"{Global.i18n.GetTranslation("Downloading")} {progress.FileName}...";
             progressBox.progressText.Text = $"{Math.Round(progress.Percentage * 100, 2)}% " +
                 $"({StringConverters.FormatSize(progress.DownloadedBytes)} of {StringConverters.FormatSize(progress.TotalBytes)})";
         }
@@ -204,15 +205,15 @@ namespace DivaModManager
                 {
                     ++updateCounter;
                     // Display the changelog and confirm they want to update
-                    Global.logger.WriteLine($"An update is available for {Path.GetFileName(mod)}!", LoggerType.Info);
-                    ChangelogBox changelogBox = new ChangelogBox(update, Path.GetFileName(mod), $"A new update is available for {Path.GetFileName(mod)}", item.Image, true);
+                    Global.logger.WriteLine($"{Global.i18n.GetTranslation("A new update is available for")} {Path.GetFileName(mod)}!", LoggerType.Info);
+                    ChangelogBox changelogBox = new ChangelogBox(update, Path.GetFileName(mod), $"{Global.i18n.GetTranslation("A new update is available for")} {Path.GetFileName(mod)}", item.Image, true);
                     changelogBox.Activate();
                     changelogBox.ShowDialog();
                     if (changelogBox.Skip)
                     {
                         if (File.Exists($@"{mod}{Global.s}mod.json"))
                         {
-                            Global.logger.WriteLine($"Skipped update for {Path.GetFileName(mod)}...", LoggerType.Info);
+                            Global.logger.WriteLine($"{Global.i18n.GetTranslation("Skipped update for")} {Path.GetFileName(mod)}...", LoggerType.Info);
                             metadata.lastupdate = update.DateAdded;
                             string metadataString = JsonSerializer.Serialize(metadata, new JsonSerializerOptions { WriteIndented = true });
                             File.WriteAllText($@"{mod}{Global.s}mod.json", metadataString);
@@ -221,7 +222,7 @@ namespace DivaModManager
                     }
                     if (!changelogBox.YesNo)
                     {
-                        Global.logger.WriteLine($"Declined update for {Path.GetFileName(mod)}...", LoggerType.Info);
+                        Global.logger.WriteLine($"{Global.i18n.GetTranslation("Declined update for")} {Path.GetFileName(mod)}...", LoggerType.Info);
                         return;
                     }
                     // Download the update
@@ -243,11 +244,11 @@ namespace DivaModManager
                     }
                     else
                     {
-                        Global.logger.WriteLine($"An update is available for {Path.GetFileName(mod)} but no downloadable files are available directly from GameBanana.", LoggerType.Info);
+                        Global.logger.WriteLine($"{Global.i18n.GetTranslation("An update is available for")} {Path.GetFileName(mod)} {Global.i18n.GetTranslation("but no downloadable files are available directly from GameBanana.")}", LoggerType.Info);
                     }
                     if (item.AlternateFileSources != null)
                     {
-                        var choice = MessageBox.Show($"Alternate file sources were found for {Path.GetFileName(mod)}! Would you like to manually update?", "Diva Mod Manager", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        var choice = MessageBox.Show($"{Global.i18n.GetTranslation("Alternate file sources were found for")} {Path.GetFileName(mod)}! {Global.i18n.GetTranslation("Would you like to manually update?")}", Global.i18n.GetTranslation("Diva Mod Manager"), MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (choice == MessageBoxResult.Yes)
                         {
                             new AltLinkWindow(item.AlternateFileSources, Path.GetFileName(mod), Global.config.CurrentGame, metadata.homepage.AbsoluteUri, true).ShowDialog();
@@ -260,7 +261,7 @@ namespace DivaModManager
                     }
                     else
                     {
-                        Global.logger.WriteLine($"Cancelled update for {Path.GetFileName(mod)}", LoggerType.Info);
+                        Global.logger.WriteLine($"{Global.i18n.GetTranslation("Cancelled update for")} {Path.GetFileName(mod)}", LoggerType.Info);
                     }
                 }
             }
@@ -280,7 +281,7 @@ namespace DivaModManager
                     }
                     catch (Exception e)
                     {
-                        Global.logger.WriteLine($"Couldn't delete the already existing {Global.assemblyLocation}{Global.s}Downloads{Global.s}{fileName} ({e.Message})",
+                        Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't delete the already existing")} {Global.assemblyLocation}{Global.s}Downloads{Global.s}{fileName} ({e.Message})",
                             LoggerType.Error);
                         return;
                     }
@@ -288,7 +289,7 @@ namespace DivaModManager
                 progressBox = new ProgressBox(cancellationToken);
                 progressBox.progressBar.Value = 0;
                 progressBox.finished = false;
-                progressBox.Title = $"Download Progress";
+                progressBox.Title = $"{Global.i18n.GetTranslation("Download Progress")}";
                 progressBox.Show();
                 progressBox.Activate();
                 // Write and download the file
@@ -323,7 +324,7 @@ namespace DivaModManager
                     progressBox.finished = true;
                     progressBox.Close();
                 }
-                Global.logger.WriteLine($"Error whilst downloading {fileName} ({e.Message})", LoggerType.Error);
+                Global.logger.WriteLine($"{Global.i18n.GetTranslation("Error whilst downloading")} {fileName} ({e.Message})", LoggerType.Error);
             }
         }
 
@@ -389,7 +390,7 @@ namespace DivaModManager
                 }
                 catch (Exception e)
                 {
-                    Global.logger.WriteLine($"Couldn't extract {fileName}. ({e.Message})", LoggerType.Error);
+                    Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't extract")} {fileName}. ({e.Message})", LoggerType.Error);
                     return;
                 }
                 TomlTable oldConfig = null;

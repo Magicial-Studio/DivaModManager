@@ -37,10 +37,8 @@ namespace DivaModManager
         public string version;
         private FileSystemWatcher ModsWatcher;
         private FlowDocument defaultFlow = new FlowDocument();
-        private string defaultText = "Welcome to Diva Mod Manager!\n\n" +
-            "To show metadata here:\nRight Click Row > Configure Mod and add author, version, and/or date fields" +
-            "\nand/or Right Click Row > Fetch Metadata and confirm the GameBanana URL of the mod";
-        private ObservableCollection<String> LauncherOptions = new ObservableCollection<String>(new string[] { "Executable", "Steam" });
+        private string defaultText = Global.i18n.GetTranslation("DefaultText");
+        private ObservableCollection<String> LauncherOptions = new ObservableCollection<String>(new string[] { Global.i18n.GetTranslation("Executable"), Global.i18n.GetTranslation("Steam") });
         public MainWindow()
         {
             InitializeComponent();
@@ -51,7 +49,7 @@ namespace DivaModManager
             var DMMVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             version = DMMVersion.Substring(0, DMMVersion.LastIndexOf('.'));
 
-            Global.logger.WriteLine($"Launched Diva Mod Manager v{version}!", LoggerType.Info);
+            Global.logger.WriteLine($"{Global.i18n.GetTranslation("Launched Diva Mod Manager")} v{version}!", LoggerType.Info);
             // Get Global.config if it exists
             if (File.Exists($@"{Global.assemblyLocation}{Global.s}Config.json"))
             {
@@ -126,7 +124,7 @@ namespace DivaModManager
                 || !Directory.Exists(Global.config.Configs[Global.config.CurrentGame].ModsFolder))
             {
                 if (Global.config.Configs[Global.config.CurrentGame].FirstOpen)
-                    Global.logger.WriteLine("Please click Setup before installing mods!", LoggerType.Warning);
+                    Global.logger.WriteLine(Global.i18n.GetTranslation("Please click Setup before installing mods!"), LoggerType.Warning);
             }
             else
             {
@@ -156,15 +154,15 @@ namespace DivaModManager
             EditLoadoutsButton.IsEnabled = false;
             App.Current.Dispatcher.Invoke(async () =>
             {
-                Global.logger.WriteLine("Checking for mod updates...", LoggerType.Info);
+                Global.logger.WriteLine(Global.i18n.GetTranslation("Checking for mod updates..."), LoggerType.Info);
                 await ModUpdater.CheckForUpdates(Global.config.Configs[Global.config.CurrentGame].ModsFolder, this);
-                Global.logger.WriteLine("Checking for Diva Mod Manager update...", LoggerType.Info);
+                Global.logger.WriteLine(Global.i18n.GetTranslation("Checking for Diva Mod Manager update..."), LoggerType.Info);
                 if (await AutoUpdater.CheckForDMMUpdate(new CancellationTokenSource()))
                     Close();
                 // Check for DML update only if its already setup
                 if (!String.IsNullOrEmpty(Global.config.Configs[Global.config.CurrentGame].ModLoaderVersion))
                 {
-                    Global.logger.WriteLine("Checking for DivaModLoader update...", LoggerType.Info);
+                    Global.logger.WriteLine(Global.i18n.GetTranslation("Checking for DivaModLoader update..."), LoggerType.Info);
                     await Setup.CheckForDMLUpdate(new CancellationTokenSource());
                 }
             });
@@ -193,7 +191,7 @@ namespace DivaModManager
                 || !Directory.Exists(Global.config.Configs[Global.config.CurrentGame].ModsFolder))
             {
                 if (Global.config.Configs[Global.config.CurrentGame].FirstOpen)
-                    Global.logger.WriteLine("Please click Setup before installing mods!", LoggerType.Warning);
+                    Global.logger.WriteLine(Global.i18n.GetTranslation("Please click Setup before installing mods!"), LoggerType.Warning);
                 return;
             }
             var currentModDirectory = Global.config.Configs[Global.config.CurrentGame].ModsFolder;
@@ -220,7 +218,7 @@ namespace DivaModManager
                                 // Check if the exception is related to an IO error.
                                 if (e.GetType() != typeof(IOException))
                                 {
-                                    Global.logger.WriteLine($"Couldn't access {configPath} ({e.Message})", LoggerType.Error);
+                                    Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't access")} {configPath} ({e.Message})", LoggerType.Error);
                                     break;
                                 }
                             }
@@ -247,7 +245,7 @@ namespace DivaModManager
                                         // Check if the exception is related to an IO error.
                                         if (e.GetType() != typeof(IOException))
                                         {
-                                            Global.logger.WriteLine($"Couldn't access {configPath} ({e.Message})", LoggerType.Error);
+                                            Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't access")} {configPath} ({e.Message})", LoggerType.Error);
                                             break;
                                         }
                                     }
@@ -274,7 +272,7 @@ namespace DivaModManager
                                     // Check if the exception is related to an IO error.
                                     if (e.GetType() != typeof(IOException))
                                     {
-                                        Global.logger.WriteLine($"Couldn't access {configPath} ({e.Message})", LoggerType.Error);
+                                        Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't access")} {configPath} ({e.Message})", LoggerType.Error);
                                         break;
                                     }
                                 }
@@ -300,7 +298,7 @@ namespace DivaModManager
                                 // Check if the exception is related to an IO error.
                                 if (e.GetType() != typeof(IOException))
                                 {
-                                    Global.logger.WriteLine($"Couldn't access {configPath} ({e.Message})", LoggerType.Error);
+                                    Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't access")} {configPath} ({e.Message})", LoggerType.Error);
                                     break;
                                 }
                             }
@@ -331,7 +329,7 @@ namespace DivaModManager
                                 // Check if the exception is related to an IO error.
                                 if (e.GetType() != typeof(IOException))
                                 {
-                                    Global.logger.WriteLine($"Couldn't access {configPath} ({e.Message})", LoggerType.Error);
+                                    Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't access")} {configPath} ({e.Message})", LoggerType.Error);
                                     break;
                                 }
                             }
@@ -361,7 +359,7 @@ namespace DivaModManager
                             // Check if the exception is related to an IO error.
                             if (e.GetType() != typeof(IOException))
                             {
-                                Global.logger.WriteLine($"Couldn't access {configPath} ({e.Message})", LoggerType.Error);
+                                Global.logger.WriteLine($"{Global.i18n.GetTranslation("Couldn't access")} {configPath} ({e.Message})", LoggerType.Error);
                                 break;
                             }
                         }

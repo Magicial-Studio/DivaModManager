@@ -14,6 +14,7 @@ namespace DivaModManager
     {
         public static Config config;
         public static Logger logger;
+        public static UI.i18n.i18n i18n = new UI.i18n.i18n();
         public static char s = Path.DirectorySeparatorChar;
         public static string assemblyLocation = AppDomain.CurrentDomain.BaseDirectory;
         public static List<string> games;
@@ -36,7 +37,7 @@ namespace DivaModManager
                     // Check if the exception is related to an IO error.
                     if (e.GetType() != typeof(IOException))
                     {
-                        Global.logger.WriteLine($"Couldn't write to Config.json ({e.Message})", LoggerType.Error);
+                        Global.logger.WriteLine($"{i18n.GetTranslation("Couldn't write to Config.json")} ({e.Message})", LoggerType.Error);
                         break;
                     }
                 }
